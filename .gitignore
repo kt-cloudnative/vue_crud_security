@@ -10,8 +10,7 @@ cypress/reports/*
 cypress/screenshots/*
 cypress/videos/*
 
-### dotenv ###
-.env
+### dotenv ### .env
 
 ### macOS ###
 # General
