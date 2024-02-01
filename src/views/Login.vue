@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useQuasar } from 'quasar';
 import { useAuthStore } from '@/stores/useAuth';
+import router from '@/router';
 
 const authStore = useAuthStore();
 
@@ -22,12 +23,27 @@ const onSubmit = async () => {
     });
   }
 };
+
+onMounted(() => {
+  if (authStore.user?.token) {
+    router.push('/employees');
+  }
+});
+
+watch(
+  () => authStore.user?.token,
+  (token) => {
+    if (token) {
+      router.push('/employees');
+    }
+  }
+);
 </script>
 
 <template>
   <div class="window-height window-width row justify-center items-center">
     <q-card flat bordered class="q-pa-md" style="width: 360px">
-      <q-form @submit="onSubmit" class="q-gutter-md">
+      <q-form @submit.prevent="onSubmit" class="q-gutter-md">
         <q-card-section class="q-mb-none">
           <div class="text-h6 text-center">로그인</div>
         </q-card-section>
